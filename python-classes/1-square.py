@@ -21,4 +21,4 @@ class Square:
 	      variable size is restricted)
 	      """
 
-         self.__size = size
+        self.__size = size
