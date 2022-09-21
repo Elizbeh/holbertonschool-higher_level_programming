@@ -6,6 +6,9 @@
 
 
 class Square:
+	"""
+    	The class Square define a square
+	"""
 
 
 	def __init__(self, size=0):
