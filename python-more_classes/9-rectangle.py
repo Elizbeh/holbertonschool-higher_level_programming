@@ -30,7 +30,6 @@ class Rectangle:
         self.__width = width
         self.__height = height
 
-
         Rectangle.number_of_instances += 1
 
     @property
@@ -62,7 +61,7 @@ class Rectangle:
         elif type(value) is not int:
             raise ValueError("width must be an integer")
         elif value < 0:
-             raise ValueError("width must be >= 0")
+            raise ValueError("width must be >= 0")
 
         self.__width = value
 
@@ -93,7 +92,7 @@ class Rectangle:
     def perimeter(self):
         """
         The perimeter method is a public instance.
-	Return the current Rectangle perimeter
+        Return the current Rectangle perimeter
         """
         if self.__width == 0 or self.__height == 0:
             return
@@ -103,7 +102,7 @@ class Rectangle:
         """
         The instance method that returns an 'informal' and nicely printable
         string representation of an instance.
-	"""
+        """
         string = ""
         if self.__height == 0:
             return string
@@ -111,9 +110,9 @@ class Rectangle:
             return string
 
         for column in range(self.__height):
-             for row in range(self.__width):
-                 string += str(self.print_symbol)
-             if column != self.__height - 1:
+            for row in range(self.__width):
+                string += str(self.print_symbol)
+            if column != self.__height - 1:
                 string += "\n"
 
         return string
