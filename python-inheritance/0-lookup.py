@@ -1,7 +1,9 @@
-#!/bin/bash/python3
+#!/usr/bin//python3
 """
 lookup function
 """
+
+
 def lookup(obj):
     """
     A function that returns the list of the available attributes
