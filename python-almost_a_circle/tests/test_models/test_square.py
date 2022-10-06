@@ -3,6 +3,7 @@
 import unittest
 from unittest import mock
 import io
+import os
 from models.square import Square
 
 
@@ -11,7 +12,6 @@ class TestSquare(unittest.TestCase):
 
     def test_instance(self):
         """test input size correct standard """
-
         s = Square(5)
         self.assertEqual(s.width, 5)
         self.assertEqual(s.height, 5)
@@ -37,6 +37,14 @@ class TestSquare(unittest.TestCase):
         with self.assertRaises(ValueError):
             Square(1, 2, -3)
 
+        with self.assertRaises(ValueError):
+            Square(0)
+
+    def test_dictionary(self):
+        s1 = Square(10, 2, 1, 1)
+        s1_dict = s1.to_dictionary()
+        self.assertEqual(s1_dict, {'id': 1, 'x': 2, 'size': 10, 'y': 1})
+
     def test_case_normal(self):
         """Test of Square(1, 2, 3, 4) exists"""
         s = Square(1, 2, 3, 4)
@@ -47,6 +55,7 @@ class TestSquare(unittest.TestCase):
 
     def test_area(self):
         """testing area"""
+
         s = Square(5)
         self.assertEqual(s.area(), 25)
 
@@ -69,19 +78,9 @@ class TestSquare(unittest.TestCase):
 
     def test_string(self):
         """Test str"""
-        s = Square(1, 2, 3, 4)
-        self.assertEqual(s.__str__(), '[Square] (4) 2/3 - 1')
 
-    def test_update(self):
-        """test update()"""
-        s1 = Square(2)
-        s1.update(10)
-        self.assertEqual(s1.id, 10)
-
-        s1.update(size=1, id=89, x=2)
-        self.assertEqual(s1.size, 1)
-        self.assertEqual(s1.id, 89)
-        self.assertEqual(s1.x, 2)
+        s = Square(1, 2)
+        self.assertEqual(s.__str__(), '[Square] (23) 2/0 - 1')
 
     def test_created(self):
         """Test of Square.create(**{ 'id': 89 }) in Square exists"""
@@ -102,6 +101,33 @@ class TestSquare(unittest.TestCase):
         self.assertEqual(s.size, 1)
         self.assertEqual(s.x, 2)
         self.assertEqual(s.y, 3)
+
+    def test_load_from_file(self):
+        """Test of Square.load_from_file(None) in Square exists"""
+        Square.save_to_file(None)
+        self.assertTrue(os.path.isfile('Square.json'))
+
+        load_file = Square.load_from_file()
+        self.assertEqual(len(load_file), 0)
+
+    def test_save_to_file(self):
+      """Test of Square.save_to_file(None) in Square exists"""
+      Square.save_to_file([Square(1)])
+      with open("Square.json", mode="r") as read_file:
+        s = read_file.read()
+        self.assertEqual(len(s), 39)
+
+    def test_save_to_file_empty(self):
+      """Test of Square.save_to_file([]) in Square exists"""
+      Square.save_to_file([])
+      with open("Square.json", mode="r") as read_file:
+           s = read_file.read()
+           self.assertEqual(s, "[]")
+
+    def test_save_to_file_none(self):
+      """Test of Square.save_to_file([]) in Square exists"""
+      with self.assertRaises(Exception):
+          Square.save_to_file()
 
 
 if __name__ == "__main__":
